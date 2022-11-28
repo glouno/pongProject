@@ -1,0 +1,10 @@
+#use Requirements.txt to install correct libraries for execution 
+#Python3 -m pip install -r requirements.txt
+
+### Requirements without specifiers ###
+os
+sys
+
+### Requirements with specifiers ###
+opencv>=4.5
+matplotlib>=3.0.0
