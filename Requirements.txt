@@ -4,6 +4,7 @@
 ### Requirements without specifiers ###
 os
 sys
+mediapipe
 
 ### Requirements with specifiers ###
 opencv-python>=4.5
