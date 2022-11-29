@@ -48,7 +48,7 @@ while True:
 
     cv.imshow('frame', frame)
 
-    if cv.waitKey(1) & 0xFF == ord('q'):
+    if cv.waitKey(1) & 0xFF == ord('q'):    #waitKey(1) & 0xFF is a bitwise operation to only keep the last 8 bits and compare it to ord('q')
         break
 
 # After the loop release the cap object
