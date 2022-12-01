@@ -34,6 +34,10 @@ while True:
         
         #needs something to find the distance / x,y positions 
         #length, info, frame=handDetector.findDistance(lmList1[8], lmList1[12])
+        yCoordinate = lmList1[8][1:2]       
+        #yCoordinate = tuple(yCoordinate) #careful change data type to tuple with tuple() if doing a circle bounding box
+        #cv2.circle() ...
+        print(yCoordinate)
 
     if len(hands)==2:
         hand2=hands[1]                          #gives us second hand
