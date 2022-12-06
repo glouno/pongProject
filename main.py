@@ -15,8 +15,8 @@ shooting = pygame.mixer.Sound("sound/bounce.ogg")
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-window_height = 600
-window_width = 1000
+window_height = 300
+window_width = 500
 display_surf = pygame.display.set_mode((window_width, window_height))
 pygame.display.set_caption("Pong")
 # Loading all images
@@ -48,7 +48,7 @@ class Paddle:
 
 #le mouvement du rectangle
     def detectMove(self, cy):
-        self.rect.y = cy
+        self.rect.y = int(cy)
         self.draw()
 
 #barre de jeu de la machine
@@ -234,8 +234,9 @@ def main():
             yCoordinate = lmList1[8][1:2]       
             #yCoordinate = tuple(yCoordinate) #careful change data type to tuple with tuple() if doing a circle bounding box
             #cv2.circle() ...
-            print(yCoordinate)
-            #game.paddles['user'].detectMove(yCoordinate)
+            print(yCoordinate[0])
+            print(type(yCoordinate[0]))
+            game.paddles['user'].detectMove(yCoordinate[0]) #On doit écrire yCoordinate[0] parce que c'est une liste et on doit sortir l'élement)
 
         if len(hands)==2:
             hand2=hands[1]                          #gives us second hand
@@ -259,10 +260,16 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-                
+              
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     paused = not paused
+            
+
+        '''
+        if cv.waitKey(1) & 0xFF == ord('p'):    #waitKey(1) & 0xFF is a bitwise operation to only keep the last 8 bits and compare it to ord('q')
+            paused = not paused
+        '''
 
         if not paused:
             #cv2.imshow("contour", frame_resize) previous resize, not sure why
