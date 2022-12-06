@@ -1,4 +1,6 @@
+
 import pygame
+import math
 import sys
 from pygame.locals import*
 import numpy as np
@@ -10,7 +12,7 @@ from cvzone.HandTrackingModule import HandDetector
 
 # Loading all sounds
 pygame.mixer.init()  ## For sound
-shooting = pygame.mixer.Sound("sound/bounce.ogg")
+shooting = pygame.mixer.Sound("/Users/mballaelisabeth/Desktop/sound/bounce.ogg")
 
 
 BLACK = (0, 0, 0)
@@ -18,10 +20,20 @@ WHITE = (255, 255, 255)
 window_height = 300
 window_width = 500
 display_surf = pygame.display.set_mode((window_width, window_height))
-pygame.display.set_caption("Pong")
+pygame.display.set_caption("menu")
 # Loading all images
 
-background = pygame.image.load("starfield.png").convert()
+# background = pygame.image.load("starfield.png").convert()
+background = pygame.image.load('/Users/mballaelisabeth/Desktop/starfield.png')
+
+icone = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/ICONE.png')
+pygame.display.set_icon(icone)
+
+Bouton_play = pygame.image.load('/Users/mballaelisabeth/Desktop/button.png')
+Bouton_play = pygame.transform.scale(Bouton_play, (200,100))
+Bouton_play_rect = Bouton_play.get_rect()
+Bouton_play_rect.x = math.ceil(display_surf.get_width()/3.33)
+Bouton_play_rect.y = math.ceil(display_surf.get_height()/2)
 
 fps = 200
 fps_clock = pygame.time.Clock()
@@ -72,7 +84,7 @@ class ScoreBoard:
         self.x = window_width - 150
         self.y = 20
         self.score = score
-        self.font = pygame.font.Font('freesansbold.ttf', 20)
+        self.font = pygame.font.Font('/Users/mballaelisabeth/Desktop/font.ttf', 20)
 
 #affichage du score
     def display(self, score):
@@ -296,5 +308,28 @@ def main():
     cv.destroyAllWindows()
     
 
-if __name__ == '__main__':
-    main()
+
+jeu_en_cours = True
+
+while jeu_en_cours:
+    
+    display_surf.blit(background, (0,-200))
+    display_surf.blit(Bouton_play,Bouton_play_rect)
+    '''
+    fenetre.blit(Bouton_help, Bouton_score_rect)
+    fenetre.blit(Bouton_score, Bouton_help_rect)
+    fenetre.blit(Bouton_quitter, Bouton_quitter_rect)
+    '''
+    
+    pygame.display.flip()
+
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit() 
+            
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if Bouton_play_rect.collidepoint(event.pos):
+                    main()
+#if __name__ == '__main__':
+#   main()
