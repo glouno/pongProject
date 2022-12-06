@@ -1,10 +1,12 @@
 import pygame
 import sys
 from pygame.locals import*
-import cv2
 import numpy as np
 import random, time
 from pygame.locals import *
+
+import cv2 as cv
+from cvzone.HandTrackingModule import HandDetector
 
 # Loading all sounds
 pygame.mixer.init()  ## For sound
@@ -13,8 +15,8 @@ shooting = pygame.mixer.Sound("sound/bounce.ogg")
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-window_height = 300
-window_width = 500
+window_height = 600
+window_width = 1000
 display_surf = pygame.display.set_mode((window_width, window_height))
 pygame.display.set_caption("Pong")
 # Loading all images
@@ -23,7 +25,7 @@ background = pygame.image.load("starfield.png").convert()
 
 fps = 200
 fps_clock = pygame.time.Clock()
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
 
 # Threshold for binary
 lower = np.array([60,25,30], dtype = 'uint8')
@@ -186,15 +188,26 @@ def main():
     game = Game()
     paused = False
 
-    while cap.isOpened():
-        _, frame = cap.read()
-        frame_resize = cv2.resize(frame, (500, 400))
+    liveVideo = cv.VideoCapture(0)
+    handDetector = HandDetector(detectionCon = 0.8, maxHands=2)    
+
+    while liveVideo.isOpened():
+        #_, frame = cap.read()
+
+        ret, frame = liveVideo.read()
+        frame = cv.flip(frame, 1)
+        hands, frame = handDetector.findHands(frame, flipType=False)
+        
+        '''
+        frame_resize = cv.resize(frame, (500, 400))
         grayimage = cv2.cvtColor(frame_resize, cv2.COLOR_RGB2GRAY)
         cascade_file = cv2.CascadeClassifier("fist.xml")
         fist = cascade_file.detectMultiScale(grayimage,scaleFactor=1.1,
                                             minNeighbors=5,
                                             minSize=(30, 30),
                                             flags=cv2.CASCADE_SCALE_IMAGE)
+
+                                          
         for x, y, w, h in fist:
             k = cv2.rectangle(frame_resize, (x, y), (x + w, y + h), (255, 255, 255), 5)
 
@@ -202,10 +215,45 @@ def main():
             cy = y -50
             cv2.circle(frame_resize, (cx, cy), 10, (255, 255, 0))
             game.paddles['user'].detectMove(cy)
-        k = cv2.waitKey(40)
+        '''
 
-        if k == ord(' '):
+        #HAND DETECTION
+        #Use element number 8: INDEX_FINGER_TIP
+
+        #for each hand we'Ll have info Like Hand--›dict{lmList,boundinqboundary, img)
+        if hands:
+            hand1=hands[0]                          #gives us first hand
+            lmList1=hand1["lmList"]                 #List of 21 Landmarks
+            bbox1=hand1["bbox"]                     #x,y,w,h of bounding box
+            centerPoint1=hand1[ "center" ]          #center of the hand cx, cy
+            handType1=hand1["type"]                #Left or right
+            finger1=handDetector.fingersUp(hand1)
+            
+            #needs something to find the distance / x,y positions 
+            #length, info, frame=handDetector.findDistance(lmList1[8], lmList1[12])
+            yCoordinate = lmList1[8][1:2]       
+            #yCoordinate = tuple(yCoordinate) #careful change data type to tuple with tuple() if doing a circle bounding box
+            #cv2.circle() ...
+            print(yCoordinate)
+            #game.paddles['user'].detectMove(yCoordinate)
+
+        if len(hands)==2:
+            hand2=hands[1]                          #gives us second hand
+            lmList2=hand2["lmList"]                 #List of 21 Landmarks
+            bbox2=hand2["bbox" ]                    #x,y, w,h of bounding box
+            centerPoint2=hand2["center"]            #center of the hand cx, cy
+            handType2=hand2["type" ]                #Left or right
+            finger2=handDetector.fingersUp(hand2)
+            #length, info, frame=handDetector.findDistance(lmList1[8],lmList2[8],frame)
+            #length, info, frame=handDetector.findDistance(centerPoint1, centerPoint2, frame)
+
+
+
+        #cv.imshow('frame', frame)
+
+        if cv.waitKey(1) & 0xFF == ord('q'):    #waitKey(1) & 0xFF is a bitwise operation to only keep the last 8 bits and compare it to ord('q')
             break
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -217,17 +265,23 @@ def main():
                     paused = not paused
 
         if not paused:
-            cv2.imshow("contour", frame_resize)
+            #cv2.imshow("contour", frame_resize) previous resize, not sure why
+            cv.imshow('frame', frame)
             game.update()
             if game.ball.hit_wall():
                 break
-                #game.update()
+                game.update()
                 
             pygame.display.update()
             fps_clock.tick(fps)
             
     print('Your score:', game.score.score)
 
+    # After the loop release the cap object
+    liveVideo.release()
+    # Destroy all the windows
+    cv.destroyAllWindows()
+    
 
 if __name__ == '__main__':
     main()
