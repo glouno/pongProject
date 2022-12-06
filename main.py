@@ -255,19 +255,25 @@ def main():
         if cv.waitKey(1) & 0xFF == ord('q'):    #waitKey(1) & 0xFF is a bitwise operation to only keep the last 8 bits and compare it to ord('q')
             break
 
+        '''
+        k = cv.waitKey(40)
+
+        if k == ord(' '):
+            paused = not paused
+        '''
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
               
-            if event.type == pygame.KEYUP:
+            #if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     paused = not paused
-            
+        
 
         '''
-        if cv.waitKey(1) & 0xFF == ord('p'):    #waitKey(1) & 0xFF is a bitwise operation to only keep the last 8 bits and compare it to ord('q')
+        if cv.waitKey(1) & 0x70 == ord('p'):    #waitKey(1) & 0xFF is a bitwise operation to only keep the last 8 bits and compare it to ord('q')
             paused = not paused
         '''
 
