@@ -1,4 +1,5 @@
 import pygame, sys
+import main
 LARGEUR = 1280
 HAUTEUR = 900
 LARGEUR_JOUEUR = 20
@@ -8,10 +9,10 @@ pygame.init()
 
 fenetre = pygame.display.set_mode((LARGEUR, HAUTEUR))
 pygame.display.set_caption("Menu")
-icone = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/ICONE.png')
+icone = pygame.image.load('image jeu/ICONE.png')
 pygame.display.set_icon(icone)
 
-background = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/BACK2.jpg')
+background = pygame.image.load('image jeu/BACK2.jpg')
 '''
 La classe Sprite est la classe de base  de tous les elements graphiques visibles de la fenetre
 De ce fait, notre classe Player va heriter de tous les attributs et methode de la classe 
@@ -120,9 +121,13 @@ class Button():
 
 
 def get_font(size): # Returns Press-Start-2P in the desired size
-    return pygame.font.Font('/Users/mballaelisabeth/Desktop/image jeu/font.ttf', size)
+    return pygame.font.Font('image jeu/font.ttf', size)
 
 def play():
+    
+    main.main()
+
+    '''
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -146,13 +151,13 @@ def play():
 
         score1 = 0
         score2 = 0
-        font = pygame.font.Font('/Users/mballaelisabeth/Desktop/atari-classic-font/AtariClassicExtrasmooth-LxZy.ttf',74)
+        font = pygame.font.Font('image jeu/AtariClassicExtrasmooth-LxZy.ttf',74)
         message1 = font.render ( str(score1), 1,(50,50,50))
         message2 = font.render ( str(score2), 1,(50,50,50)) 
-        '''
-        Étant donné que les différentes instances de la classe Player hérite aussi de la classe Sprite
-        il faut créér une liste qui va regrouper tous les elements de cette et les ajouter à chaque fois sur notre ecran 
-        '''
+        
+        #Étant donné que les différentes instances de la classe Player hérite aussi de la classe Sprite
+        #il faut créér une liste qui va regrouper tous les elements de cette et les ajouter à chaque fois sur notre ecran 
+        
         # ajouter des elements graphiques à la fenetre 
         all_sprites_list = pygame.sprite.Group()
         all_sprites_list.add(Player_1)
@@ -198,11 +203,11 @@ def play():
         if balle.rect.centery < LARGEUR_JOUEUR:
             balle.vitesse[1] *= -1   
     
-        '''
-        Sprite possede une methode collide.mask qui permet de dire si deux objets sont entrés en collisions
-        Nous allons l'utiliser ici pour determiner lorsqu'une raquette frappe la balle et ainsi inverser
-        la vitesse de celle-ci grave à la fonction rebond 
-        '''
+        
+        #Sprite possede une methode collide.mask qui permet de dire si deux objets sont entrés en collisions
+        #Nous allons l'utiliser ici pour determiner lorsqu'une raquette frappe la balle et ainsi inverser
+        #la vitesse de celle-ci grave à la fonction rebond 
+        
         if pygame.sprite.collide_mask(balle, Player_1) or pygame.sprite.collide_mask(balle, Player_2):
             balle.rebond()
         
@@ -210,21 +215,23 @@ def play():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            '''
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-            '''
+            
+            #if event.type == pygame.MOUSEBUTTONDOWN:
+                #if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    #main_menu()
+            
         pygame.display.update()
+
+        '''
 
 def aide():
     while True:
         HELP_MOUSE_POS = pygame.mouse.get_pos()
 
         fenetre.fill("white")
-        titleFont  =  pygame.font.Font( '/Users/mballaelisabeth/Desktop/image jeu/font.ttf' , 100 )
+        titleFont  =  pygame.font.Font( 'image jeu/font.ttf' , 100 )
        
-        texteRegles  =  pygame.font.Font( '/Users/mballaelisabeth/Desktop/image jeu/font.ttf'  , 25 )
+        texteRegles  =  pygame.font.Font( 'image jeu/font.ttf'  , 25 )
 
         # zones cliquables
         
@@ -262,9 +269,9 @@ def score():
         SCORE_MOUSE_POS = pygame.mouse.get_pos()
 
         fenetre.fill("white")
-        titleFont  =  pygame.font.Font( '/Users/mballaelisabeth/Desktop/image jeu/font.ttf', 100 )
+        titleFont  =  pygame.font.Font( 'image jeu/font.ttf', 100 )
        
-        texteRegles  =  pygame.font.Font( '/Users/mballaelisabeth/Desktop/image jeu/font.ttf' , 25)
+        texteRegles  =  pygame.font.Font( 'image jeu/font.ttf' , 25)
         
 
         #affichage à l'écran
