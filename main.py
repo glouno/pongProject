@@ -17,7 +17,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 window_height = 300
 window_width = 500
-display_surf = pygame.display.set_mode((window_width, window_height))
+displayFlags = pygame.SCALED
+display_surf = pygame.display.set_mode((window_width, window_height), displayFlags)
 pygame.display.set_caption("Pong")
 # Loading all images
 
