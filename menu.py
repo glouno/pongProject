@@ -9,7 +9,7 @@ HAUTEUR_JOUEUR = 80
 LARGEUR_JOUEUR = 20
 #initialise tous les modules pygame importés
 def get_font(size): 
-    return pygame.font.Font('/Users/mballaelisabeth/Desktop/image jeu/font.ttf', size)
+    return pygame.font.Font('Images/font.ttf', size)
 
 
 '''
@@ -97,8 +97,8 @@ class Game:
         self.is_playing = False
         self.is_reading = False
 
-        self.titleFont  =  pygame.font.Font( '/Users/mballaelisabeth/Desktop/image jeu/font.ttf', 100 )
-        self.texteRegles  =  pygame.font.Font( '/Users/mballaelisabeth/Desktop/image jeu/font.ttf'  , 25 )
+        self.titleFont  =  pygame.font.Font( 'Images/font.ttf', 100 )
+        self.texteRegles  =  pygame.font.Font( 'Images/font.ttf'  , 25 )
 
         self.Player_1= Player((50,50,50), LARGEUR_JOUEUR, HAUTEUR_JOUEUR)
         self.Player_1.rect.x = 0
@@ -113,7 +113,7 @@ class Game:
 
         self.score1 = 0
         self.score2 = 0
-        self.font = pygame.font.Font('/Users/mballaelisabeth/Desktop/atari-classic-font/AtariClassicExtrasmooth-LxZy.ttf',74) 
+        self.font = pygame.font.Font('Images/AtariClassicExtrasmooth-LxZy.ttf',74) 
         self.message1= self.font.render (str(self.score1), 1,(50,50,50)) 
         self.message2 = self.font.render (str(self.score2), 1,(50,50,50))
         '''
@@ -232,28 +232,28 @@ pygame.display.set_caption(" MENU ")
 fenetre = pygame.display.set_mode ((LARGEUR, HAUTEUR))
 
 # charger l'image de fond de la fenetre de menu
-background = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/BACK2.jpg')
+background = pygame.image.load('Images/BACK2.jpg')
 
-icone = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/ICONE.png')
+icone = pygame.image.load('Images/ICONE.png')
 pygame.display.set_icon(icone)
 # chargement des différents boutons de la page d'accueil
-Bouton_play = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/bouton play.png')
+Bouton_play = pygame.image.load('Images/bouton_play.png')
 # redimensioner les différentes images
 Bouton_play = pygame.transform.scale(Bouton_play, (400,150))
 Bouton_play_rect = Bouton_play.get_rect()
 Bouton_play_rect.x = math.ceil(fenetre.get_width()/3.33)
 Bouton_play_rect.y = 100
-Bouton_score = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/bouton score.png')
+Bouton_score = pygame.image.load('Images/bouton_score.png')
 Bouton_score = pygame.transform.scale(Bouton_score, (400,150))
 Bouton_score_rect = Bouton_score.get_rect()
 Bouton_score_rect.x = math.ceil(fenetre.get_width()/3.33)
 Bouton_score_rect.y = 300
-Bouton_help = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/boton aide.png')
+Bouton_help = pygame.image.load('Images/bouton_aide.png')
 Bouton_help = pygame.transform.scale(Bouton_help, (400,150))
 Bouton_help_rect = Bouton_help.get_rect()
 Bouton_help_rect.x = math.ceil(fenetre.get_width()/3.33)
 Bouton_help_rect.y = 500
-Bouton_quitter = pygame.image.load('/Users/mballaelisabeth/Desktop/image jeu/bouton sortie.png')
+Bouton_quitter = pygame.image.load('Images/bouton_sortie.png')
 Bouton_quitter = pygame.transform.scale(Bouton_quitter, (400,150))
 Bouton_quitter_rect = Bouton_quitter.get_rect()
 Bouton_quitter_rect.x = math.ceil(fenetre.get_width()/3.33)
