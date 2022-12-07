@@ -176,11 +176,11 @@ class Game:
         self.ball.move()
         self.paddles['computer'].move()
         if self.ball.hit_paddle_user(self.paddles['user']):
-            self.ball.bounce('y')
+            self.ball.bounce('x')
             self.score.score += 1
         self.score.display(self.score.score)
         if self.ball.hit_paddle_computer(self.paddles['computer']):
-            self.ball.bounce('y')
+            self.ball.bounce('x')
 
 
 def main():
